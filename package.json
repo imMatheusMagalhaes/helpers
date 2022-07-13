@@ -1,0 +1,19 @@
+{
+  "name": "helpers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "getMessages.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "kafkajs": "^2.1.0",
+    "node-fetch": "^2.6.7",
+    "pdf-lib": "^1.17.1"
+  },
+  "devDependencies": {
+    "@types/kafkajs": "^1.9.0"
+  }
+}
