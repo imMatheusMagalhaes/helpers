@@ -2,9 +2,10 @@ const { default: fetch } = require("node-fetch");
 const { PDFDocument } = require("pdf-lib");
 
 const pdf = async () => {
-  const pdfUrl = "https://www.caceres.mt.gov.br/fotos_institucional_downloads/2.pdf";
+  const pdfUrl =
+    "https://www.caceres.mt.gov.br/fotos_institucional_downloads/2.pdf";
   const pdfBytes = await fetch(pdfUrl).then((res) => res.arrayBuffer());
-
+  console.log(pdfBytes);
   // Load the PDF document without updating its existing metadata
   const pdfDoc = await PDFDocument.load(pdfBytes, {
     updateMetadata: false,
@@ -23,4 +24,4 @@ const pdf = async () => {
   console.log(creator);
 };
 
-pdf()
+pdf();

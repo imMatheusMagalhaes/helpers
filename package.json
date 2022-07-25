@@ -9,9 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^0.27.2",
     "kafkajs": "^2.1.0",
     "node-fetch": "^2.6.7",
-    "pdf-lib": "^1.17.1"
+    "pdf-lib": "^1.17.1",
+    "xstate": "^4.32.1"
   },
   "devDependencies": {
     "@types/kafkajs": "^1.9.0"
