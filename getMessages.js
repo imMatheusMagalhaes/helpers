@@ -50,22 +50,23 @@ const runConsume = async () => {
   await consumer.subscribe({ topics: [topic] });
   consumer.run({
     autoCommit: true,
-    eachMessage: async ({ message }) => {
-      const format = {
-        key: message.key.toString(),
-        offset: message.offset.toString(),
-        value: JSON.parse(message.value.toString()),
-      };
-      const data = JSON.stringify(format, null, 2);
-      fs.appendFile("events.json", data, (err) => {
-        if (err) throw err;
-        console.log(`offset: ${message.offset.toString()} - written to file`);
-      });
-      return data;
-    },
+    eachMessage: task
   });
   consumer.seek({ topic, partition, offset });
 };
+
+const task = async ({ message }) => {
+  const format = {
+    key: message.key.toString(),
+    offset: message.offset.toString(),
+    value: JSON.parse(message.value.toString()),
+  };
+  const data = JSON.stringify(format, null, 2);
+  fs.appendFile("events.json", data, (err) => {
+    if (err) throw err;
+    console.log(`offset: ${message.offset.toString()} - written to file`);
+  });
+}
 
 const runProducer = async () => {
   const events = require("./events.json")
