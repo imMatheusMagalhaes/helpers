@@ -5,9 +5,9 @@ const readline = require("readline").createInterface({
   output: process.stdout,
 });
 let usersToInvite = [];
-let roomsToInvite = [];
+const toInvite = require('./toInvite')
+let roomsToInvite;
 let axiosInstance;
-
 const rocketLogin = () => {
   let rocketUser, rocketPassword;
   console.log("ROCKETCHAT LOGIN\n");
@@ -61,7 +61,7 @@ const getAxiosInstance = (userId, authToken) =>
 const getUsers = () => {
   readline.question("insert user id or enter 'exit' to leave\n", (value) => {
     if (value === "exit") {
-      return getRooms();
+      return usersInvite();
     }
     usersToInvite.push(value);
     console.log(`inserted`);
@@ -82,6 +82,8 @@ const getRooms = () => {
 };
 
 const usersInvite = async () => {
+  if (roomsToInvite.length === 0)
+    roomsToInvite = toInvite
   if (usersToInvite.length !== 0 && roomsToInvite.length !== 0)
     return Promise.all(
       usersToInvite.map((user) => {
@@ -89,13 +91,14 @@ const usersInvite = async () => {
         roomsToInvite.map(async (room) => {
           console.log(`in room: ${room}`);
           try {
-            await axiosInstance.post("/api/v1/groups.invite", {
+            const body = {
               userId: user,
               roomId: room,
-            });
+            }
+            await axiosInstance.post("/api/v1/groups.invite", body);
             console.log(`success invite user: ${user} in room: ${room}`);
           } catch (error) {
-            console.log(error?.response?.data?.error);
+            console.log(error.toString());
           }
         });
       })

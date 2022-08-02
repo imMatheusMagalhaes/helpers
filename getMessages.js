@@ -62,7 +62,8 @@ const task = async ({ message }) => {
     value: JSON.parse(message.value.toString()),
   };
   const data = JSON.stringify(format, null, 2);
-  fs.appendFile("events.json", data, (err) => {
+  const now = new Date()
+  fs.appendFile(`events_${now.getDate().toString()}-${now.getMonth().toString()}.json`, data, (err) => {
     if (err) throw err;
     console.log(`offset: ${message.offset.toString()} - written to file`);
   });

@@ -1,2 +1,5 @@
 /node_modules
-/events*.json
+/*.json
+/*.pdf
+/*.txt
+/toInvite.js
