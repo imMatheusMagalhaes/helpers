@@ -5,8 +5,7 @@ const readline = require("readline").createInterface({
   output: process.stdout,
 });
 let usersToInvite = [];
-const toInvite = require('./toInvite')
-let roomsToInvite;
+let roomsToInvite = [];
 let axiosInstance;
 const rocketLogin = () => {
   let rocketUser, rocketPassword;
@@ -61,7 +60,7 @@ const getAxiosInstance = (userId, authToken) =>
 const getUsers = () => {
   readline.question("insert user id or enter 'exit' to leave\n", (value) => {
     if (value === "exit") {
-      return usersInvite();
+      return getRooms();
     }
     usersToInvite.push(value);
     console.log(`inserted`);
@@ -82,8 +81,6 @@ const getRooms = () => {
 };
 
 const usersInvite = async () => {
-  if (roomsToInvite.length === 0)
-    roomsToInvite = toInvite
   if (usersToInvite.length !== 0 && roomsToInvite.length !== 0)
     return Promise.all(
       usersToInvite.map((user) => {

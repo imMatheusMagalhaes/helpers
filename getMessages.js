@@ -7,9 +7,10 @@ const readline = require("readline").createInterface({
 let topic;
 let offset;
 let partition;
+let commit;
 let id = "dev";
 let select
-
+const credentials = require('./confluentCred.json')
 const getData = () =>
   new Promise((resolve, _) =>
     readline.question("what topic?\n", (value) => {
@@ -24,8 +25,11 @@ const getData = () =>
           offset = value;
           readline.question("what partition?\n", (value) => {
             partition = value;
-            readline.close();
-            return resolve();
+            readline.question("commit? [1] = true [0] = false\n", (value) => {
+              commit = value;
+              readline.close();
+              return resolve();
+            });
           });
         });
       });
@@ -39,9 +43,8 @@ const kafka = () =>
     connectionTimeout: 45000,
     sasl: {
       mechanism: "plain",
-      username: "W7CPMTHUQQBBWFBC",
-      password:
-        "yVEW4Y+q0j/HsbFLTfCaOlYE/8P2YXcubdt5qWln2PYCAyCgDUzPbMUgsatfL/8e",
+      username: credentials.username,
+      password: credentials.password,
     },
   });
 const runConsume = async () => {
@@ -49,7 +52,7 @@ const runConsume = async () => {
   await consumer.connect();
   await consumer.subscribe({ topics: [topic] });
   consumer.run({
-    autoCommit: true,
+    autoCommit: Boolean(commit),
     eachMessage: task
   });
   consumer.seek({ topic, partition, offset });
