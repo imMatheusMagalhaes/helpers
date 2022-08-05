@@ -58,7 +58,7 @@ const getAxiosInstance = (userId, authToken) =>
   });
 
 const getUsers = () => {
-  readline.question("insert user id or enter 'exit' to leave\n", (value) => {
+  readline.question("insert user id or enter 'exit' to finish\n", (value) => {
     if (value === "exit") {
       return getRooms();
     }
@@ -69,7 +69,7 @@ const getUsers = () => {
 };
 
 const getRooms = () => {
-  readline.question("insert room id or enter 'exit' to leave\n", (value) => {
+  readline.question("insert room id or enter 'exit' to finish\n", (value) => {
     if (value === "exit") {
       readline.close();
       return usersInvite();
